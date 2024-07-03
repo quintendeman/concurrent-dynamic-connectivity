@@ -28,12 +28,12 @@ private lateinit var STANFORD_WEB_GRAPH: Graph
 
 enum class GraphParams : Serializable {
     RANDOM_NLOG,
-    USA_ROADS,
+    // USA_ROADS,
     RANDOM_N,
     RANDOM_2N,
     RANDOM_NSQRT,
-    TWITTER,
-    STANFORD_WEB,
+    // TWITTER,
+    // STANFORD_WEB,
     RANDOM_DIVIDED
 }
 
@@ -59,11 +59,11 @@ class GraphServer : UnicastRemoteObject(), GraphServerInterface {
                 RANDOM_DIVIDED_GRAPH = loadGraph(RANDOM_DIVIDED_GRAPH_PARAMS)
             RANDOM_DIVIDED_GRAPH
         }
-        GraphParams.USA_ROADS -> {
-            if (!::USA_ROADS_GRAPH.isInitialized)
-                USA_ROADS_GRAPH = loadGraph(USA_ROADS_GRAPH_PARAMS)
-            USA_ROADS_GRAPH
-        }
+        // GraphParams.USA_ROADS -> {
+        //     if (!::USA_ROADS_GRAPH.isInitialized)
+        //         USA_ROADS_GRAPH = loadGraph(USA_ROADS_GRAPH_PARAMS)
+        //     USA_ROADS_GRAPH
+        // }
         GraphParams.RANDOM_N -> {
             if (!::RANDOM_N_GRAPH.isInitialized)
                 RANDOM_N_GRAPH = loadGraph(RANDOM_N_GRAPH_PARAMS)
@@ -84,16 +84,16 @@ class GraphServer : UnicastRemoteObject(), GraphServerInterface {
                 RANDOM_NSQRT_GRAPH = loadGraph(RANDOM_NSQRT_GRAPH_PARAMS)
             RANDOM_NSQRT_GRAPH
         }
-        GraphParams.TWITTER -> {
-            if (!::TWITTER_GRAPH.isInitialized)
-                TWITTER_GRAPH = loadGraph(TWITTER_GRAPH_PARAMS)
-            TWITTER_GRAPH
-        }
-        GraphParams.STANFORD_WEB -> {
-            if (!::STANFORD_WEB_GRAPH.isInitialized)
-                STANFORD_WEB_GRAPH = loadGraph(STANFORD_WEB_GRAPH_PARAMS)
-            STANFORD_WEB_GRAPH
-        }
+        // GraphParams.TWITTER -> {
+        //     if (!::TWITTER_GRAPH.isInitialized)
+        //         TWITTER_GRAPH = loadGraph(TWITTER_GRAPH_PARAMS)
+        //     TWITTER_GRAPH
+        // }
+        // GraphParams.STANFORD_WEB -> {
+        //     if (!::STANFORD_WEB_GRAPH.isInitialized)
+        //         STANFORD_WEB_GRAPH = loadGraph(STANFORD_WEB_GRAPH_PARAMS)
+        //     STANFORD_WEB_GRAPH
+        // }
     }
 
     companion object {
