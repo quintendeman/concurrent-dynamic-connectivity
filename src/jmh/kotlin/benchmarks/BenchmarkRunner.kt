@@ -8,8 +8,8 @@ import org.openjdk.jmh.runner.options.OptionsBuilder
 import java.util.concurrent.Phaser
 import kotlin.concurrent.thread
 
-const val iterations = 5
-const val warmupIterations = 3
+const val iterations = 1
+const val warmupIterations = 0
 const val TIME_IN_SECONDS = 3
 
 @Throws(RunnerException::class)
@@ -24,14 +24,23 @@ fun main() {
 
     // testGraphs()
 
-    val streamDcpOptions = OptionsBuilder()
+    val updateDcpOptions = OptionsBuilder()
         .include(StreamFileBenchmark::class.java.simpleName)
         .jvmArgs("-Xmx50g", "-Xms15g")
         .forks(1)
         .resultFormat(ResultFormatType.CSV)
-        .result("streamfile_dcp_results.csv")
+        .result("update_dcp_results.csv")
         .build()
-    Runner(streamDcpOptions).run()
+    Runner(updateDcpOptions).run()
+
+    val queryDcpOptions = OptionsBuilder()
+        .include(StreamFileQueryBenchmark::class.java.simpleName)
+        .jvmArgs("-Xmx50g", "-Xms15g")
+        .forks(1)
+        .resultFormat(ResultFormatType.CSV)
+        .result("query_dcp_results.csv")
+        .build()
+    Runner(queryDcpOptions).run()
 
     // val dcpOptions = OptionsBuilder()
     //     .include(SmallCommonDynamicConnectivityRandomBenchmark::class.java.simpleName)
