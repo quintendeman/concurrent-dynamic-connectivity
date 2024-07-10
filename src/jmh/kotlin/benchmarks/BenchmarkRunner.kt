@@ -24,14 +24,14 @@ fun main() {
 
     // testGraphs()
 
-    val updateDcpOptions = OptionsBuilder()
-        .include(StreamFileBenchmark::class.java.simpleName)
-        .jvmArgs("-Xmx50g", "-Xms15g")
-        .forks(1)
-        .resultFormat(ResultFormatType.CSV)
-        .result("update_dcp_results.csv")
-        .build()
-    Runner(updateDcpOptions).run()
+    // val updateDcpOptions = OptionsBuilder()
+    //     .include(StreamFileBenchmark::class.java.simpleName)
+    //     .jvmArgs("-Xmx50g", "-Xms15g")
+    //     .forks(1)
+    //     .resultFormat(ResultFormatType.CSV)
+    //     .result("update_dcp_results.csv")
+    //     .build()
+    // Runner(updateDcpOptions).run()
 
     val queryDcpOptions = OptionsBuilder()
         .include(StreamFileQueryBenchmark::class.java.simpleName)

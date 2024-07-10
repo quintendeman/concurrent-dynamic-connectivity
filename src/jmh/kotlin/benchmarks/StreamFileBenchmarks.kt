@@ -58,7 +58,7 @@ open class StreamFileQueryBenchmark {
     lateinit var scenarioExecutor: SuccessiveScenarioExecutor
 
     @Param
-    open var dcpConstructor: LockElisionDCPForModificationsConstructor = LockElisionDCPForModificationsConstructor.values()[0]
+    open var dcpConstructor: DCPForModificationsConstructor = DCPForModificationsConstructor.values()[0]
 
     @Param("1", "24", "48")
     open var workers: Int = 0
@@ -76,7 +76,9 @@ open class StreamFileQueryBenchmark {
 
     @Setup(Level.Invocation)
     fun initializeInvocation() {
-        scenarioExecutor = SuccessiveScenarioExecutor(scenario, dcpConstructor.constructor())
+        scenarioExecutor = SuccessiveScenarioExecutor(
+            scenario,
+            { size -> dcpConstructor.constructor()(size, workers + 1) })
     }
 
     @Setup(Level.Iteration)
