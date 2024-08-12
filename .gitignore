@@ -2,6 +2,7 @@
 .idea
 /build/
 /bin/
+/binary_streams/
 /results/
 *.iml
 
