@@ -8,16 +8,16 @@ import thirdparty.Aksenov239.fc.*
 import java.util.concurrent.atomic.*
 
 enum class DCPConstructor {
-    MajorDynamicConnectivity,
-    FineGrainedLockingDCP,
-    FineGrainedReadWriteLockingDynamicConnectivity,
-    NBFCDynamicConnectivity,
-    NBReadsCoarseGrainedLockingDCP,
-    NBReadsFineGrainedLockingDynamicConnectivity,
-    MajorCoarseGrainedDynamicConnectivity,
-    FCReadOptimizedDynamicConnectivity,
-    CoarseGrainedLockingDCP,
-    CoarseGrainedReadWriteLockingDCP
+    MajorDynamicConnectivity,                       // 9
+    FineGrainedLockingDCP,                          // 6
+    FineGrainedReadWriteLockingDynamicConnectivity, // 7
+    NBFCDynamicConnectivity,                        // 12?13
+    NBReadsCoarseGrainedLockingDCP,                 // 3, 5
+    NBReadsFineGrainedLockingDynamicConnectivity,   // 8
+    MajorCoarseGrainedDynamicConnectivity,          // 10, 11
+    FCReadOptimizedDynamicConnectivity,             // 12?13
+    CoarseGrainedLockingDCP,                        // 1, 4
+    CoarseGrainedReadWriteLockingDCP                // 2
 }
 
 // JMH annotation processor fails when a lambda is in enum
