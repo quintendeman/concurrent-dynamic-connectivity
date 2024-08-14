@@ -1,10 +1,12 @@
 package benchmarks
 
 import benchmarks.util.*
-import benchmarks.util.executors.SuccessiveScenarioExecutor
-import benchmarks.util.generators.StreamFileScenarioGenerator
+import benchmarks.util.executors.ScenarioExecutor
+import benchmarks.util.generators.*
 import org.openjdk.jmh.annotations.*
 import java.util.concurrent.TimeUnit
+
+private const val TOTAL_SCENARIO_SIZE = 15_000_000
 
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
@@ -12,15 +14,20 @@ import java.util.concurrent.TimeUnit
 @Measurement(iterations = iterations, time = TIME_IN_SECONDS, timeUnit = TimeUnit.SECONDS)
 @Warmup(iterations = warmupIterations, time = TIME_IN_SECONDS, timeUnit = TimeUnit.SECONDS)
 open class StreamFileBenchmark {
+    @Param
+    open var graphParams: GraphParams = GraphParams.values()[0]
 
     lateinit var scenario: Scenario
-    lateinit var scenarioExecutor: SuccessiveScenarioExecutor
+    lateinit var scenarioExecutor: ScenarioExecutor
 
     @Param
-    open var dcpConstructor: DCPForModificationsConstructor = DCPForModificationsConstructor.values()[0]
+    open var dcpConstructor: DCPConstructor = DCPConstructor.values()[0]
 
-    @Param
+    @Param("1", "2", "4", "8", "16", "32", "64", "128", "144")
     open var workers: Int = 0
+
+    @Param("4", "99")
+    open var readWeight = 1
 
     @Benchmark
     fun benchmark() {
@@ -35,7 +42,7 @@ open class StreamFileBenchmark {
 
     @Setup(Level.Invocation)
     fun initializeInvocation() {
-        scenarioExecutor = SuccessiveScenarioExecutor(
+        scenarioExecutor = ScenarioExecutor(
             scenario,
             { size -> dcpConstructor.constructor()(size, workers + 1) })
     }
