@@ -32,7 +32,7 @@ open class StreamFileBenchmark3 {
     @Setup(Level.Trial)
     fun initialize() {
         scenario = StreamFileScenarioGenerator()
-            .generate("/mnt/nvme/fast_query_project/binary_streams/kron_13_query10_binary", MAX_WORKERS)
+            .generate(System.getenv("CDC_INPUT_FILE"), workers)
     }
 
     @Setup(Level.Invocation)

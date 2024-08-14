@@ -29,7 +29,7 @@ fun main() {
         .jvmArgs("-Xmx50g", "-Xms15g")
         .forks(1)
         .resultFormat(ResultFormatType.CSV)
-        .result("results/update_dcp_results.csv")
+        .result(System.getenv("CDC_OUTPUT_FILE"))
         .warmupIterations(0)
         .measurementIterations(1)
         .param("workers", "48")
