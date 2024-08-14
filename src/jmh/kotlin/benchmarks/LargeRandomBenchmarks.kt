@@ -9,7 +9,7 @@ import benchmarks.util.generators.FullyRandomScenarioGenerator
 import org.openjdk.jmh.annotations.*
 import java.util.concurrent.TimeUnit
 
-const val MAX_WORKERS = 144
+const val MAX_WORKERS = 48
 const val LARGE_SCENARIO_SIZE = 100_000_000
 
 @State(Scope.Thread)

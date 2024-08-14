@@ -1,8 +1,8 @@
 package benchmarks
 
 import benchmarks.util.*
-import benchmarks.util.executors.ScenarioExecutor
-import benchmarks.util.generators.*
+import benchmarks.util.executors.SuccessiveScenarioExecutor
+import benchmarks.util.generators.StreamFileScenarioGenerator
 import org.openjdk.jmh.annotations.*
 import java.util.concurrent.TimeUnit
 
@@ -11,21 +11,18 @@ import java.util.concurrent.TimeUnit
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @Measurement(iterations = iterations, time = TIME_IN_SECONDS, timeUnit = TimeUnit.SECONDS)
 @Warmup(iterations = warmupIterations, time = TIME_IN_SECONDS, timeUnit = TimeUnit.SECONDS)
-open class StreamFileBenchmark {
+open class StreamFileBenchmark3 {
     @Param
     open var graphParams: GraphParams = GraphParams.values()[0]
 
     lateinit var scenario: Scenario
-    lateinit var scenarioExecutor: ScenarioExecutor
+    lateinit var scenarioExecutor: SuccessiveScenarioExecutor
 
     @Param
-    open var dcpConstructor: DCPConstructor = DCPConstructor.values()[0]
+    open var dcpConstructor: DCPForModificationsConstructor = DCPForModificationsConstructor.values()[0]
 
     @Param("1", "2", "4", "8", "16", "32", "64", "128", "144")
     open var workers: Int = 0
-
-    @Param("0")
-    open var readWeight = 0
 
     @Benchmark
     fun benchmark() {
@@ -35,12 +32,12 @@ open class StreamFileBenchmark {
     @Setup(Level.Trial)
     fun initialize() {
         scenario = StreamFileScenarioGenerator()
-            .generate("/mnt/nvme/fast_query_project/binary_streams/kron_13_query10_binary", workers)
+            .generate("/mnt/nvme/fast_query_project/binary_streams/kron_13_query10_binary", MAX_WORKERS)
     }
 
     @Setup(Level.Invocation)
     fun initializeInvocation() {
-        scenarioExecutor = ScenarioExecutor(
+        scenarioExecutor = SuccessiveScenarioExecutor(
             scenario,
             { size -> dcpConstructor.constructor()(size, workers + 1) })
     }
