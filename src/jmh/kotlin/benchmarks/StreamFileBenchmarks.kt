@@ -6,8 +6,6 @@ import benchmarks.util.generators.*
 import org.openjdk.jmh.annotations.*
 import java.util.concurrent.TimeUnit
 
-private const val TOTAL_SCENARIO_SIZE = 15_000_000
-
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -26,8 +24,8 @@ open class StreamFileBenchmark {
     @Param("1", "2", "4", "8", "16", "32", "64", "128", "144")
     open var workers: Int = 0
 
-    @Param("4", "99")
-    open var readWeight = 1
+    @Param("0")
+    open var readWeight = 0
 
     @Benchmark
     fun benchmark() {

@@ -32,7 +32,10 @@ fun main() {
         .result("results/update_dcp_results.csv")
         .warmupIterations(0)
         .measurementIterations(1)
-        .param("workers", "48")
+        .param("workers", "1")
+        .param("dcpConstructor", "MajorDynamicConnectivity")
+        .param("readWeight", "0")
+        .param("graphParams", "RANDOM_DIVIDED")
         .build()
     Runner(updateDcpOptions).run()
 
