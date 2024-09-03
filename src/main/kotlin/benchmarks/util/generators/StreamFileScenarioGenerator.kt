@@ -29,7 +29,7 @@ class StreamFileScenarioGenerator {
         print("Num updates: ")
         println(num_updates_long)
         val num_updates: Int
-        val max_updates = 100000000
+        val max_updates = 500000000
         if (num_updates_long >= max_updates) {
             num_updates = max_updates
             println("UPPER BOUND OF BUFFER REACHED")

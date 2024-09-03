@@ -10,6 +10,7 @@ mkdir -p results
 run_test() {
 	export CDC_INPUT_FILE=binary_streams/$1
     export CDC_OUTPUT_FILE=results/$1.csv
+	cat $CDC_INPUT_FILE > /dev/null
     java -jar build/libs/concurrent-dynamic-connectivity-1.0-SNAPSHOT-benchmark.jar
 }
 
