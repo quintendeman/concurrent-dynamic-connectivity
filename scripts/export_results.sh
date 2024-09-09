@@ -9,10 +9,8 @@ write_out() {
 	filename=$1.csv
 	if [ -f $filename ]; then
 		awk -F ',' 'BEGIN {ORS=","}NR==2{print $5}' $filename >> $2
-
 	else
 		echo -n "0," >> $2
-		echo -n "0," >> $3
 	fi
 }
 
@@ -71,4 +69,4 @@ do
 done
 
 echo "" >> $updates
-
+	
