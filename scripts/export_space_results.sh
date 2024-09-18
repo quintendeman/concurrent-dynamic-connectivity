@@ -1,17 +1,18 @@
 #!/bin/bash
 
-declare base_dir="$(dirname $(dirname $(realpath $0)))"
-cd ${base_dir}
+#declare base_dir="$(dirname $(dirname $(realpath $0)))"
 
-echo MAKE SURE TO RUN ./gradlew clean benchmarkJar BEFORE RUNNING THIS SCRIPT
+#cd ${base_dir}/results/mpi_speed_results
 
-mkdir -p results
 
-run_test() {
-	export CDC_INPUT_FILE=binary_streams/$1
-    export CDC_OUTPUT_FILE=results/$1.csv
-	cat $CDC_INPUT_FILE > /dev/null
-    java -jar build/libs/concurrent-dynamic-connectivity-1.0-SNAPSHOT-benchmark.jar
+write_out() {
+	filename=$1_mem.txt
+	if [ -f $filename ]; then
+		sort -n -k2 -t',' $filename | tail -1 | awk '{ print $2 / (1024 * 1024); }' | tr -d '\n' >> $2
+		echo -n "," >> $2
+	else
+		echo -n "0," >> $2
+	fi
 }
 
 declare -a streams=(
@@ -50,8 +51,23 @@ declare -a streams=(
 [27]="randomDIV_ff_query10_binary"
 )
 
-run_test ${streams[$1]}
-exit
+updates="SPACE.txt"
+rm $updates
 
+for i in $(seq 0 13);
+do
+	write_out ${streams[$i]} $updates
+done
 
+echo "" >> $updates
 
+updates="SPACE_FF.txt"
+rm $updates
+
+for i in $(seq 14 27);
+do
+	write_out ${streams[$i]} $updates
+done
+
+echo "" >> $updates
+	

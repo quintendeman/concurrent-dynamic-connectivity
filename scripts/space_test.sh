@@ -6,12 +6,16 @@ cd ${base_dir}
 echo MAKE SURE TO RUN ./gradlew clean benchmarkJar BEFORE RUNNING THIS SCRIPT
 
 mkdir -p results
+mkdir -p results/space_results
 
 run_test() {
 	export CDC_INPUT_FILE=binary_streams/$1
-    export CDC_OUTPUT_FILE=results/$1.csv
+  export CDC_OUTPUT_FILE=results/$1.csv
 	cat $CDC_INPUT_FILE > /dev/null
-    java -jar build/libs/concurrent-dynamic-connectivity-1.0-SNAPSHOT-benchmark.jar
+
+  java -jar build/libs/concurrent-dynamic-connectivity-1.0-SNAPSHOT-benchmark.jar &
+	scripts/mem_record.sh concurrent-dynamic-connectivity-1.0-SNAPSHOT-benchmark 2 results/space_results/$1_mem.txt
+	wait
 }
 
 declare -a streams=(
@@ -50,8 +54,10 @@ declare -a streams=(
 [27]="randomDIV_ff_query10_binary"
 )
 
-run_test ${streams[$1]}
-exit
+for i in $(seq 15 27);
+do
+	run_test ${streams[$i]}
+done
 
 
 

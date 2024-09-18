@@ -26,7 +26,7 @@ fun main() {
 
     val updateDcpOptions = OptionsBuilder()
         .include(StreamFileBenchmark3::class.java.simpleName)
-        .jvmArgs("-Xmx50g", "-Xms15g")
+        .jvmArgs("-Xmx200g", "-Xms200g", "-XX:+UseNUMA")
         .forks(1)
         .resultFormat(ResultFormatType.CSV)
         .result(System.getenv("CDC_OUTPUT_FILE"))
