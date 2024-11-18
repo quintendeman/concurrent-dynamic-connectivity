@@ -54,7 +54,7 @@ declare -a streams=(
 [27]="randomDIV_ff_query10_binary"
 )
 
-for i in $(seq 15 27);
+for i in $(seq 0 27);
 do
 	run_test ${streams[$i]}
 done
